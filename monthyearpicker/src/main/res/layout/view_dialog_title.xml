@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/month_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text=""
+        android:textColor="@color/colorMainBackground"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/year_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/month_name"
+        android:layout_toRightOf="@id/month_name"
+        android:alpha="0.39"
+        android:padding="16dp"
+        android:text=""
+        android:textColor="@color/colorMainBackground"
+        android:textSize="22sp" />
+
+</RelativeLayout>
