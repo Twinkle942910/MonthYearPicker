@@ -10,6 +10,10 @@ import com.twinkle94.monthyearpicker.R;
 
 import java.lang.reflect.Field;
 
+/**
+ * This class changes color of NumberPicker divider using reflection
+ */
+
 public class NumberPickerWithColor extends NumberPicker {
 
     public NumberPickerWithColor(Context context, AttributeSet attrs) {
