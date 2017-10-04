@@ -48,7 +48,9 @@ YearMonthPickerDialog yearMonthPickerDialog = new YearMonthPickerDialog(this, ca
 ```
 1st argument - Context.
 
-2nd - Date set listener.
+2nd - Calendar.
+
+3nd - Date set listener.
 
 ### And after this just show it whenever you need it to appear.
 
