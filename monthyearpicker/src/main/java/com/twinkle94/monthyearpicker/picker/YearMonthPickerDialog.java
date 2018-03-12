@@ -15,6 +15,7 @@ import com.twinkle94.monthyearpicker.custom_number_picker.NumberPickerWithColor;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Creates a dialog for picking the year and month.
@@ -34,13 +35,7 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
     /**
      * Array of months.
      */
-    private static final String[] MONTHS_LIST = new String[]
-            {
-                    "January", "February", "March",
-                    "April", "May", "June", "July",
-                    "August", "September", "October",
-                    "November", "December"
-            };
+    private static String[] MONTHS_LIST = null;
 
     /**
      * Listener for user's date picking.
@@ -194,10 +189,10 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
 
         //Setting month's picker min and max value
         monthPicker.setMinValue(0);
-        monthPicker.setMaxValue(MONTHS_LIST.length - 1);
+        monthPicker.setMaxValue(monthsList().length - 1);
 
         //Setting month list.
-        monthPicker.setDisplayedValues(MONTHS_LIST);
+        monthPicker.setDisplayedValues(monthsList());
 
         //Applying current date.
         setCurrentDate(yearPicker, monthPicker, monthName, yearValue);
@@ -300,7 +295,7 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
                 mMonth = newVal;
 
                 //Set title month text to picked month.
-                monthName.setText(MONTHS_LIST[newVal]);
+                monthName.setText(monthsList()[newVal]);
             }
         });
 
@@ -331,5 +326,39 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
          * Listens for user's actions.
          */
         void onYearMonthSet(int year, int month);
+    }
+
+
+    /**
+     * Capitalize string
+     */
+    private static String capitalize(final String line) {
+        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+    }
+
+    /**
+     * Get month name with specified locale
+     */
+    private static String[] monthsList() {
+        if (MONTHS_LIST == null) {
+            int[] months = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+            String[] stringMonths = new String[months.length];
+
+            for (int i = 0; i < months.length; i++) {
+                Calendar calendar = Calendar.getInstance();
+
+                SimpleDateFormat monthDate = new SimpleDateFormat("MMMM", Locale.getDefault());
+
+                calendar.set(Calendar.MONTH, months[i]);
+                String monthName = monthDate.format(calendar.getTime());
+
+
+                stringMonths[i] = capitalize(monthName);
+            }
+
+            MONTHS_LIST = stringMonths;
+        }
+
+        return MONTHS_LIST;
     }
 }
