@@ -30,7 +30,10 @@ dependencies {
 ## You can simply create your dialog in code, using next lines
 
 ```Java
-YearMonthPickerDialog yearMonthPickerDialog = new YearMonthPickerDialog(this, new YearMonthPickerDialog.OnDateSetListener() {
+Calendar calendar = Calendar.getInstance();
+calendar.set(2010,01,01);
+
+YearMonthPickerDialog yearMonthPickerDialog = new YearMonthPickerDialog(this, calendar, new YearMonthPickerDialog.OnDateSetListener() {
             @Override
             public void onYearMonthSet(int year, int month) {
                 Calendar calendar = Calendar.getInstance();
@@ -45,7 +48,9 @@ YearMonthPickerDialog yearMonthPickerDialog = new YearMonthPickerDialog(this, ne
 ```
 1st argument - Context.
 
-2nd - Date set listener.
+2nd - Calendar.
+
+3nd - Date set listener.
 
 ### And after this just show it whenever you need it to appear.
 
