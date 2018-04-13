@@ -83,6 +83,12 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
     private int mMonth;
 
     /**
+     * Allow user to set custom date
+     */
+    private NumberPickerWithColor mYearPicker;
+    private TextView mYearValue;
+
+    /**
      * Creates a new YearMonthPickerDialog object that represents the dialog for
      * picking year and month.
      *
@@ -177,20 +183,19 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
         final View contentView = layoutInflater.inflate(R.layout.view_month_year_picker, null, false);
 
         //Initializing year and month pickers.
-        final NumberPickerWithColor yearPicker =
-                (NumberPickerWithColor) contentView.findViewById(R.id.year_picker);
+        mYearPicker = (NumberPickerWithColor) contentView.findViewById(R.id.year_picker);
         final NumberPickerWithColor monthPicker =
                 (NumberPickerWithColor) contentView.findViewById(R.id.month_picker);
 
         //Initializing title text views
         final TextView monthName = (TextView) titleView.findViewById(R.id.month_name);
-        final TextView yearValue = (TextView) titleView.findViewById(R.id.year_name);
+        mYearValue = (TextView) titleView.findViewById(R.id.year_name);
 
         //If there is user's title color,
         if (mTextTitleColor != -1) {
             //Then apply it.
             setTextColor(monthName);
-            setTextColor(yearValue);
+            setTextColor(mYearValue);
         }
 
         //Setting custom title view and content to dialog.
@@ -198,8 +203,8 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
         mDialogBuilder.setView(contentView);
 
         //Setting year's picker min and max value
-        yearPicker.setMinValue(MIN_YEAR);
-        yearPicker.setMaxValue(MAX_YEAR);
+        mYearPicker.setMinValue(MIN_YEAR);
+        mYearPicker.setMaxValue(MAX_YEAR);
 
         //Setting month's picker min and max value
         monthPicker.setMinValue(0);
@@ -209,10 +214,10 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
         monthPicker.setDisplayedValues(monthsList());
 
         //Applying current date.
-        setCurrentDate(yearPicker, monthPicker, monthName, yearValue);
+        setCurrentDate(mYearPicker, monthPicker, monthName, mYearValue);
 
         //Setting all listeners.
-        setListeners(yearPicker, monthPicker, monthName, yearValue);
+        setListeners(mYearPicker, monthPicker, monthName, mYearValue);
 
         //Setting titles and listeners for dialog buttons.
         mDialogBuilder.setPositiveButton("OK", this);
@@ -332,6 +337,34 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
      */
     public void show() {
         mDialog.show();
+    }
+
+    /**
+     * Sets min value of year picker widget.
+     * @param minYear The min value inclusive.
+     */
+    public void setMinYear(int minYear) {
+        if (mYearPicker != null) {
+            if (mYearPicker.getValue() < minYear) {
+                mYearPicker.setValue(minYear);
+                mYearValue.setText(Integer.toString(minYear));
+            }
+            mYearPicker.setMinValue(Math.min(minYear, mYearPicker.getMaxValue()));
+        }
+    }
+
+    /**
+     * Sets max value of year picker widget.
+     * @param maxYear The max value inclusive.
+     */
+    public void setMaxYear(int maxYear) {
+        if (mYearPicker != null) {
+            if (mYearPicker.getValue() > maxYear) {
+                mYearPicker.setValue(maxYear);
+                mYearValue.setText(Integer.toString(maxYear));
+            }
+            mYearPicker.setMaxValue(Math.max(maxYear, mYearPicker.getMinValue()));
+        }
     }
 
     /**
