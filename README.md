@@ -106,4 +106,13 @@ use example : ``` R.color.MyTextTitleColor ```
 
 Also, if you want to change color of title view, you have to change you main theme primary color, because it depends on it's value.
 
+## Set a custom year range
+
+If you want the displayed values of year vary within a range, you  have to set the first (min) and the last (max) year:
+
+```Java
+yearMonthPickerDialog.setMinYear(2000);
+yearMonthPickerDialog.setMaxYear(2020);
+```
+
 ### Check demonstraction project for more details.
