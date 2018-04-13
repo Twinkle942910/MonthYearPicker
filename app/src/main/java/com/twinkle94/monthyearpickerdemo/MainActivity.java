@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity
                 yearMonth.setText(dateFormat.format(calendar.getTime()));
             }
         });
-
+        yearMonthPickerDialog.setMinYear(2000);
+        yearMonthPickerDialog.setMaxYear(2020);
         yearMonthPickerDialog.show();
     }
 }
