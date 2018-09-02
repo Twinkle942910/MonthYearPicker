@@ -1,5 +1,6 @@
 package com.twinkle94.monthyearpicker.picker;
 
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
@@ -33,6 +34,11 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
     private static final int MAX_YEAR = 2099;
 
     /**
+     * The Month format pattern.
+     */
+    private static final String MONTH_FORMAT = "MMMM";
+
+    /**
      * Array of months.
      */
     private static String[] MONTHS_LIST = null;
@@ -51,6 +57,11 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
      * Application's context.
      */
     private final Context mContext;
+
+    /**
+     * Specific locale for format datetime.
+     */
+    private static Locale mCurrentLocale = Locale.getDefault();
 
     /**
      * The builder for our dialog.
@@ -131,6 +142,13 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
         mTheme = theme;
         mTextTitleColor = titleTextColor;
         this.calendar = calendar;
+
+        //Set current locale of system
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            mCurrentLocale = mContext.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            mCurrentLocale =  mContext.getResources().getConfiguration().locale;
+        }
 
         //Builds the dialog using listed parameters.
         build();
@@ -251,7 +269,7 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
         mYear = calendar.get(Calendar.YEAR);
 
         //Setting output format.
-        SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
+        SimpleDateFormat monthFormat = new SimpleDateFormat(MONTH_FORMAT, mCurrentLocale);
 
         //Setting current date values to dialog title views.
         monthName.setText(monthFormat.format(calendar.getTime()));
@@ -396,7 +414,7 @@ public class YearMonthPickerDialog implements Dialog.OnClickListener {
             for (int i = 0; i < months.length; i++) {
                 Calendar calendar = Calendar.getInstance();
 
-                SimpleDateFormat monthDate = new SimpleDateFormat("MMMM", Locale.getDefault());
+                SimpleDateFormat monthDate = new SimpleDateFormat(MONTH_FORMAT, mCurrentLocale);
 
                 calendar.set(Calendar.MONTH, months[i]);
                 String monthName = monthDate.format(calendar.getTime());
